@@ -7,25 +7,16 @@ const App = () => {
   const part3 = 'State of a component'
   const exercises3 = 14
 
-  const contentProps: ContentProps = {
-    items: [
-      {
-        part: part1, exercise: exercises1
-      },
-      {
-        part: part2, exercise: exercises2
-      },
-      {
-        part: part3, exercise: exercises3
-      }
-  ]}
+  const partArr = [{part: part1, exercise: exercises1},
+      {part: part2, exercise: exercises2},
+      {part: part3, exercise: exercises3}]
 
   const sum = exercises1 + exercises2 + exercises3
 
   return (
     <div>
       <Header course={course}/>
-      <Content content={contentProps}/>
+      <Content items={partArr}/>
       <Total total={sum}/>
     </div>
   )
@@ -33,34 +24,39 @@ const App = () => {
 type HeaderProps = {
   course: string
 }
-const Header = (props: HeaderProps) => {
+const Header: React.FC<HeaderProps> = ({course}: HeaderProps) => {
   return (
-    <>
-      <h1>{props.course}</h1>
-    </>
+    <h1>{course}</h1>
   ) 
 }
 
 type ContentProps = {
-  items: {
-    part: string
-    exercise: number
-  }[]
+  items: PartProps[]
 }
-const Content = ({content}: {content: ContentProps}) => {
+const Content: React.FC<ContentProps> = ({items}: ContentProps) => {
   return (
     <div>
-      {content.items.map(item => <p key={item.part}>{item.part} {item.exercise}</p>)}
+      {items.map(item => <Part key={item.part} part={item.part} exercise={item.exercise}/>)}
     </div>
+  )
+}
+
+type PartProps = {
+  part: string
+  exercise: number
+}
+const Part: React.FC<PartProps> = ({part, exercise}: PartProps) => {
+  return (
+    <p>{part} {exercise}</p>
   )
 }
 
 type TotalProps = {
   total: number
 }
-const Total = (props: TotalProps) => {
+const Total: React.FC<TotalProps> = ({total}: TotalProps) => {
   return (
-    <p>Number of exercises {props.total}</p>
+    <p>Number of exercises {total}</p>
   )
 }
 
