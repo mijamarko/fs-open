@@ -1,23 +1,27 @@
 const App = () => {
-  const course = 'Half Stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
+  const course: string = 'Half Stack application development'
 
-  const partArr = [{part: part1, exercise: exercises1},
-      {part: part2, exercise: exercises2},
-      {part: part3, exercise: exercises3}]
+  const parts: PartProps[] = [
+    {
+      part: 'Fundamentals of React',
+      exercise: 10
+    },
+    {
+      part: 'Using props to pass data',
+      exercise: 7
+    },
+    {
+      part: 'State of a component', 
+      exercise: 14
+    }
+  ]
 
-  const sum = exercises1 + exercises2 + exercises3
 
   return (
     <div>
       <Header course={course}/>
-      <Content items={partArr}/>
-      <Total total={sum}/>
+      <Content items={parts}/>
+      <Total items={parts}/>
     </div>
   )
 }
@@ -51,12 +55,10 @@ const Part: React.FC<PartProps> = ({part, exercise}: PartProps) => {
   )
 }
 
-type TotalProps = {
-  total: number
-}
-const Total: React.FC<TotalProps> = ({total}: TotalProps) => {
+const Total: React.FC<ContentProps> = ({items}: ContentProps) => {
+  const sum = items.reduce((curr, acc) => curr + acc.exercise, 0)
   return (
-    <p>Number of exercises {total}</p>
+    <p>Number of exercises {sum}</p>
   )
 }
 
