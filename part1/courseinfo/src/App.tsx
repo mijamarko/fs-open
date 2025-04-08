@@ -1,27 +1,28 @@
 const App = () => {
-  const course: string = 'Half Stack application development'
+  const course = {
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name: 'Fundamentals of React',
+        exercise: 10
+      },
+      {
+        name: 'Using props to pass data',
+        exercise: 7
+      },
+      {
+        name: 'State of a component', 
+        exercise: 14
+      }
+    ]
 
-  const parts: PartProps[] = [
-    {
-      part: 'Fundamentals of React',
-      exercise: 10
-    },
-    {
-      part: 'Using props to pass data',
-      exercise: 7
-    },
-    {
-      part: 'State of a component', 
-      exercise: 14
-    }
-  ]
-
+  }
 
   return (
     <div>
-      <Header course={course}/>
-      <Content items={parts}/>
-      <Total items={parts}/>
+      <Header course={course.name}/>
+      <Content items={course.parts}/>
+      <Total items={course.parts}/>
     </div>
   )
 }
@@ -40,16 +41,16 @@ type ContentProps = {
 const Content: React.FC<ContentProps> = ({items}: ContentProps) => {
   return (
     <div>
-      {items.map(item => <Part key={item.part} part={item.part} exercise={item.exercise}/>)}
+      {items.map(item => <Part key={item.name} name={item.name} exercise={item.exercise}/>)}
     </div>
   )
 }
 
 type PartProps = {
-  part: string
+  name: string
   exercise: number
 }
-const Part: React.FC<PartProps> = ({part, exercise}: PartProps) => {
+const Part: React.FC<PartProps> = ({name: part, exercise}: PartProps) => {
   return (
     <p>{part} {exercise}</p>
   )
